@@ -19,16 +19,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# SQL Server bağlantı bilgileri
+# SQL Server connections information
 server = '127.0.0.1\\SQLEXPRESS'
 database = 'TwiTrends_1'
 username = 'sa'
 password = '1234Koray!'
 
-# Raporların kaydedileceği klasör
+# Folder where reports will be saved
 REPORT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'TwiTrends-Backend', 'report_files'))
 
-# Türkçe font
+# Turkish font
 FONT_PATH = r"C:\TwiFonts\DejaVuSans.ttf"  
 
 def clean_text(text):
@@ -63,14 +63,14 @@ def create_csv(df, filename):
 
     export_df = df[['Tarih', 'Duygu', 'Kullanıcı', 'Tweet']].copy()
 
-    # Tweet içeriğini temizle: satır atlamaları, tırnak
+    
     export_df['Tweet'] = export_df['Tweet'].apply(
         lambda x: clean_text(str(x)).replace("\n", " ").replace("\r", " ").replace('"', "'")
     )
 
     path = os.path.join(REPORT_DIR, filename + ".csv")
 
-    # Excel'de Türkçe karakter desteği için utf-8-sig + quoting
+    # utf-8-sig + quoting for Turkish character support in Exce
     export_df.to_csv(
         path,
         index=False,
@@ -86,7 +86,7 @@ def create_pdf(df, filename):
     pdf.add_font("DejaVu", "", FONT_PATH, uni=True)
     pdf.set_font("DejaVu", size=9)
 
-    # Başlık satırı
+    
     pdf.set_fill_color(230, 230, 230)
     pdf.set_text_color(0)
     pdf.cell(45, 8, "Tarih", 1, 0, 'L', 1)
@@ -122,7 +122,7 @@ def generate_report(payload: ReportRequest):
     now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     base_name = f"report_{keyword}_{now}"
 
-    # CSV ve PDF dosyalarını oluştur
+    
     csv_path = create_csv(df, base_name)
     pdf_path = create_pdf(df, base_name)
 
@@ -160,3 +160,4 @@ def delete_report(filename: str):
         return {"message": f"{filename} silindi"}
     else:
         raise HTTPException(status_code=404, detail="Dosya bulunamadı")
+
