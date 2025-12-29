@@ -2,10 +2,10 @@
 const express = require('express');
 const sql = require('mssql');
 const router = express.Router();
-const config = require('../dbConfig'); // ✅ config artık ayrı dosyadan
-const verifyToken = require('../middleware/verifyToken');  // Token doğrulama
+const config = require('../dbConfig'); 
+const verifyToken = require('../middleware/verifyToken');  
 
-// ✅ Kullanıcıları Listele
+
 router.get('/users', verifyToken, async (req, res) => {
   const role = req.user.role;
 
@@ -57,3 +57,4 @@ router.delete('/users/:id', verifyToken, async (req, res) => {
 
 
 module.exports = router;
+
