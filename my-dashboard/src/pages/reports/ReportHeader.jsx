@@ -11,7 +11,7 @@ const ReportHeader = ({ onFilter }) => {
 
   return (
     <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 w-full">
-      {/* Tarih seçimi */}
+      {/* Date Information */}
       <div className="flex items-center w-full sm:w-1/2 gap-2">
         <CalendarDays size={20} className="text-white" />
         <input
@@ -25,7 +25,7 @@ const ReportHeader = ({ onFilter }) => {
         />
       </div>
 
-      {/* Arama alanı */}
+      {/* Searching Area */}
       <div className="flex items-center w-full sm:w-1/2 gap-2 border border-white/20 rounded-md px-3 py-2 bg-white/20 dark:bg-gray-800">
         <Search size={18} className="text-white/80" />
         <input
@@ -44,3 +44,4 @@ const ReportHeader = ({ onFilter }) => {
 };
 
 export default ReportHeader;
+
