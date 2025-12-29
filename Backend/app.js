@@ -47,16 +47,16 @@ async function resetDatabase() {
     await sql.query(`DELETE FROM TweetHashtags`);
     await sql.query(`DELETE FROM Hashtags`);
     await sql.query(`DELETE FROM Tweets`);
-    console.log("✅ Veritabanı temizlendi.");
+    console.log("Veritabanı temizlendi.");
   } catch (err) {
-    console.error("❌ Veritabanı temizlenirken hata:", err);
+    console.error("Veritabanı temizlenirken hata:", err);
   }
 }
 
 async function fixHashtagsFromExistingTweets() {
   try {
     await sql.connect(config);
-    console.log("🔄 Eski tweetlerde hashtag taraması başlatıldı...");
+    console.log("Eski tweetlerde hashtag taraması başlatıldı...");
     const tweets = await sql.query`SELECT tweet_id, content FROM dbo.Tweets`;
     for (const tweet of tweets.recordset) {
       const hashtags = extractHashtags(tweet.content);
@@ -83,9 +83,9 @@ async function fixHashtagsFromExistingTweets() {
         `;
       }
     }
-    console.log("✅ Hashtag düzeltmesi tamamlandı.");
+    console.log("Hashtag düzeltmesi tamamlandı.");
   } catch (err) {
-    console.error("❌ fixHashtagsFromExistingTweets Hatası:", err);
+    console.error("fixHashtagsFromExistingTweets Hatası:", err);
   }
 }
 
@@ -118,7 +118,7 @@ async function generateReport(tweets, keyword) {
   const reportFilePathCsv = path.join(__dirname, 'report_files', `report_${cleanedKeyword}.csv`);
   const reportFilePathPdf = path.join(__dirname, 'report_files', `report_${cleanedKeyword}.pdf`);
 
-  // **CSV Raporu Oluşturma**
+  // **Creating CSV Report**
   const csvWriter = createCsvWriter({
     path: reportFilePathCsv,
     header: [
@@ -217,7 +217,7 @@ app.post('/api/scrape', async (req, res) => {
 });
 
 
-//Live tweets (user'a özel + arama kelimesine özel)
+//Live tweets 
 app.get("/api/tweets/live", async (req, res) => {
   const { user_id, search_keyword } = req.query;
 
@@ -246,9 +246,9 @@ app.get("/api/tweets/live", async (req, res) => {
 
 
 
-//Tweet sentiment dağılımı (keyword ile filtreleme)
+//Tweet sentiment analysis
 app.get('/api/tweets/sentiment-distribution', async (req, res) => {
-  const { keyword } = req.query;  // keyword parametresi alınıyor
+  const { keyword } = req.query;  
   if (!keyword) {
     return res.status(400).json({ error: "keyword gereklidir." });
   }
@@ -338,7 +338,7 @@ app.get('/api/tweets/trending-hashtags', async (req, res) => {
 
 
 
-//Tweet ekleme 
+//Adding Tweet
 app.post('/api/tweets/add', async (req, res) => {
   const user_id = parseInt(req.body.user_id);
   let { content, tweet_date, keyword, start_date, end_date } = req.body;
@@ -357,7 +357,7 @@ app.post('/api/tweets/add', async (req, res) => {
       formattedTweetDate = tweet_date.replace('T', ' ').replace('Z', '').slice(0, 19);
     }
 
-    // Tweet ekle, varsa 409 gönder
+    
     let tweetResult;
     try {
       tweetResult = await sql.query`
@@ -375,7 +375,7 @@ app.post('/api/tweets/add', async (req, res) => {
 
     const tweetId = tweetResult.recordset[0].tweet_id;
 
-    //HASHTAG işlemleri
+    //HASHTAG operations
     const hashtags = extractHashtags(content);
     for (const tag of hashtags) {
       await sql.query`
@@ -551,14 +551,14 @@ app.post('/generate-report', async (req, res) => {
   }
 
   try {
-    // Tweetleri veritabanından al
+    
     const tweets = await fetchTweets(keyword);
 
     if (tweets.length === 0) {
       return res.status(404).json({ message: "No tweets found for the given keyword" });
     }
 
-    // Rapor dosyasını oluştur
+    
     const reportPaths = await generateReport(tweets, keyword);
 
     res.status(200).json({
@@ -576,7 +576,7 @@ app.post('/generate-report', async (req, res) => {
 
 
 
-//Rapor listeleme
+//Rapor list
 app.get('/api/reports', (req, res) => {
   const reportDir = path.join(__dirname, 'report_files');
 
@@ -605,7 +605,7 @@ app.get('/api/reports', (req, res) => {
   });
 });
 
-//Rapor dosyası indirme
+//Download Report File
 app.get('/reports/download/:filename', (req, res) => {
   const { filename } = req.params;
   const filePath = path.join(__dirname, 'report_files', filename);
@@ -617,7 +617,7 @@ app.get('/reports/download/:filename', (req, res) => {
   }
 });
 
-// Rapor silme işlemi
+// Deleting Report Process
 app.delete('/reports/:filename', (req, res) => {
   const { filename } = req.params;
   const filePath = path.join(__dirname, 'report_files', filename);
@@ -634,4 +634,5 @@ app.delete('/reports/:filename', (req, res) => {
 app.listen(3001, () => {
   console.log('🚀 Server is running on http://localhost:3001');
 });
+
 
