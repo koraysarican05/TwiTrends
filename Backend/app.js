@@ -17,16 +17,18 @@ app.use('/api/admin', adminRoutes);
 app.use('/report_files', express.static(path.join(__dirname, 'report_files')));
 
 const config = {
-  user: 'sa',
-  password: '1234Koray!',
-  server: '127.0.0.1\\SQLEXPRESS',
-  port: 1433,
-  database: 'TwiTrends_1',
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  server: process.env.DB_SERVER,
+  port: process.env.DB_PORT,
+  database: process.env.DB_NAME,
   options: {
     trustServerCertificate: true,
     enableArithAbort: true
   }
 };
+
+module.exports = config;
 
 function extractHashtags(text) {
   const regex = /#(\w+)/g;
@@ -632,3 +634,4 @@ app.delete('/reports/:filename', (req, res) => {
 app.listen(3001, () => {
   console.log('🚀 Server is running on http://localhost:3001');
 });
+
