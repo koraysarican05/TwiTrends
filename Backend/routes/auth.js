@@ -27,8 +27,8 @@ const sendEmail = async (email, resetToken) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'koraysarican423@gmail.com', // Gmail adresiniz
-        pass: 'nhgu ybvv ijfn ctht',  // Gmail şifreniz
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD
       },
     });
 
@@ -46,7 +46,7 @@ const sendEmail = async (email, resetToken) => {
   }
 };
 
-// 🔥 LOGIN
+//  LOGIN
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -73,7 +73,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// 🔥 REGISTER
+//  REGISTER
 router.post('/register', async (req, res) => {
   const { fullName, email, password, role } = req.body;
   try {
@@ -91,7 +91,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// 🔥 PASSWORD RESET (Forgot Password)
+//  PASSWORD RESET (Forgot Password)
 router.post('/forgot-password', async (req, res) => {
   const { email } = req.body;
 
@@ -106,18 +106,18 @@ router.post('/forgot-password', async (req, res) => {
       return res.status(400).json({ message: 'User not found' });
     }
 
-    // Token oluşturuluyor ve süresi 24 saat olarak belirleniyor
+    
     const resetToken = crypto.randomBytes(20).toString('hex');
     const resetTokenExpire = Date.now() + 86400000; // 24 saat
 
-    // Token'ı kullanıcıya kaydediyoruz
+   
     await sql.query`
       UPDATE Users 
       SET resetPasswordToken = ${resetToken}, resetPasswordExpire = ${resetTokenExpire}
       WHERE email = ${email}
     `;
 
-    // E-posta gönderimi
+    
     await sendEmail(email, resetToken);  // sendEmail fonksiyonunu çağırıyoruz.
 
     res.status(200).json({ message: 'Password reset link sent' });
@@ -127,7 +127,7 @@ router.post('/forgot-password', async (req, res) => {
   }
 });
 
-// 🔥 VERIFY RESET TOKEN
+//  VERIFY RESET TOKEN
 router.get('/verify-reset-token/:token', async (req, res) => {
   const { token } = req.params;
 
@@ -151,7 +151,7 @@ router.get('/verify-reset-token/:token', async (req, res) => {
   }
 });
 
-// 🔥 PASSWORD RESET (Reset Password)
+//  PASSWORD RESET (Reset Password)
 router.post('/reset-password/:token', async (req, res) => {
   const { token } = req.params;
   const { password, confirmPassword } = req.body;
@@ -172,10 +172,10 @@ router.post('/reset-password/:token', async (req, res) => {
       return res.status(400).json({ message: 'Geçersiz veya süresi dolmuş token' });
     }
 
-    // Yeni şifreyi hash'liyoruz
+    
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Şifreyi güncelliyoruz
+ 
     await sql.query`
       UPDATE Users 
       SET password = ${hashedPassword}, resetPasswordToken = NULL, resetPasswordExpire = NULL
@@ -189,7 +189,7 @@ router.post('/reset-password/:token', async (req, res) => {
   }
 });
 
-// 🔥 GİRİŞ YAPAN KULLANICININ BİLGİLERİNİ GETİR
+
 router.get('/me', verifyToken, async (req, res) => {
   try {
     await sql.connect(config);
@@ -204,7 +204,7 @@ router.get('/me', verifyToken, async (req, res) => {
   }
 });
 
-// 🔥 GİRİŞ YAPAN KULLANICININ BİLGİLERİNİ GÜNCELLE
+
 router.put('/me', verifyToken, async (req, res) => {
   const { full_name, email, password } = req.body;
 
@@ -234,7 +234,7 @@ router.put('/me', verifyToken, async (req, res) => {
 });
 
 
-// Örnek AdminPanel route
+
 router.get('/admin/users', verifyToken, async (req, res) => {
   const role = req.user.role; // Kullanıcı rolü, token'dan alınmalı
 
@@ -243,12 +243,12 @@ router.get('/admin/users', verifyToken, async (req, res) => {
   }
 
   try {
-    await sql.connect(config); // Veritabanına bağlanıyoruz
+    await sql.connect(config); 
     const result = await sql.query`
       SELECT user_id, full_name, email, role, created_at FROM Users
     `;
     const users = result.recordset;
-    res.json(users); // Kullanıcıları JSON olarak döndürüyoruz
+    res.json(users); 
   } catch (err) {
     console.error('Error fetching users:', err);
     res.status(500).json({ error: 'Failed to fetch users' });
@@ -290,4 +290,5 @@ router.delete('/admin/users/:id', verifyToken, async (req, res) => {
 
 
 module.exports = router;
+
 
