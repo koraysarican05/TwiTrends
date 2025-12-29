@@ -10,7 +10,7 @@ import {
   Legend,
 } from "recharts";
 
-//Eksik günleri sıfırla doldurmak için tarih dizisi üret
+
 const generateFullDateRange = (start, end) => {
   const dateList = [];
   const current = new Date(start);
@@ -24,7 +24,7 @@ const generateFullDateRange = (start, end) => {
   return dateList;
 };
 
-//Eksik tarihleri sıfırla doldur
+
 const fillMissingDates = (data) => {
   if (!data || data.length === 0) return [];
 
@@ -39,9 +39,9 @@ const fillMissingDates = (data) => {
 };
 
 const LineChartComponent = ({ data }) => {
-  //Gelen veriyi normalize et: sadece YYYY-MM-DD bırak
+  
   const normalizedData = data.map(d => ({
-    day: d.day.slice(0, 10), // sadece gün bilgisi (2025-04-27 gibi)
+    day: d.day.slice(0, 10), 
     tweetCount: d.tweetCount
   }));
 
@@ -116,3 +116,4 @@ const LineChartComponent = ({ data }) => {
 };
 
 export default LineChartComponent;
+
