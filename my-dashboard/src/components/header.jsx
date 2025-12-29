@@ -6,12 +6,12 @@ const Header = () => {
 
   return (
     <header className="flex justify-between items-center bg-white p-4 shadow-md relative">
-      {/* Hamburger Menü */}
+      {/* Hamburger Menu */}
       <button className="text-2xl p-2 focus:outline-none">
         &#9776;
       </button>
 
-      {/* Arama Çubuğu */}
+      {/* SearchBar */}
       <div className="relative flex-1 mx-4">
         <input
           type="text"
@@ -21,7 +21,7 @@ const Header = () => {
         <FaSearch className="absolute left-3 top-3 text-gray-500" />
       </div>
 
-      {/* Profil */}
+      {/* Profile */}
       <div className="relative">
         <button onClick={() => setIsOpen(!isOpen)} className="text-3xl focus:outline-none">
           <FaUserCircle />
@@ -41,3 +41,4 @@ const Header = () => {
 };
 
 export default Header;
+
