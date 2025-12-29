@@ -65,7 +65,7 @@ const ResetPassword = () => {
           </div>
         )}
 
-        {/* Şifre Alanı */}
+        {/* Password Area */}
         <div className="relative">
           <input
             type={passwordVisible ? 'text' : 'password'}
@@ -83,7 +83,7 @@ const ResetPassword = () => {
           </button>
         </div>
 
-        {/* Şifre Onay Alanı */}
+        {/* Confirmation Password Area */}
         <div className="relative">
           <input
             type={confirmPasswordVisible ? 'text' : 'password'}
@@ -113,3 +113,4 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
+
