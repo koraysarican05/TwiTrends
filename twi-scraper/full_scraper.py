@@ -15,7 +15,7 @@ MAX_TWEETS = 100
 SESSION_FILE = "session.json"
 REAL_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
 
-# === GIZLI FILTRE ===
+# === SECRET FILTER ===
 key = b'ZXzwigJ8m-PmUanS5fu1-Y2uAMCRCGBaYh1qIzOq-D4='
 cipher = Fernet(key)
 encrypted_block = [
@@ -155,7 +155,7 @@ def generate_report(keyword, start_date, end_date, user_id):
 
 def run_scraper():
     if len(sys.argv) < 5:
-        safe_print("❌ Kullanım: python full_scraper.py <keyword> <start_date> <end_date> <user_id>")
+        safe_print("Kullanım: python full_scraper.py <keyword> <start_date> <end_date> <user_id>")
         return
 
     keyword = sys.argv[1]
@@ -200,10 +200,11 @@ def run_scraper():
                     total_collected += scrape_day(page, keyword, day, day + timedelta(days=1), MAX_TWEETS // len(blocks) // 4, tweet_set, user_id)
 
         browser.close()
-        safe_print(f"\n✅ Toplam {total_collected} tweet işlendi.")
+        safe_print(f"\n Toplam {total_collected} tweet işlendi.")
 
-        # ✅ En kritik: scraping bitti → rapor isteği gönder
+        
         generate_report(keyword, start_date, end_date, user_id)
 
 if __name__ == "__main__":
     run_scraper()
+
