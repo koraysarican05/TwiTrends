@@ -20,12 +20,12 @@ const StatsCard = ({ title, value, color, icon, index }) => {
         </div>
       )}
 
-      {/* Başlık */}
+      {/* Header */}
       <h4 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold tracking-wide uppercase text-left opacity-90 drop-shadow">
         {title}
       </h4>
 
-      {/* Değer */}
+      {/* Value */}
       <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mt-4 drop-shadow-md text-left">
         {value !== undefined ? value : <span className="animate-pulse">...</span>}
       </p>
@@ -70,3 +70,4 @@ const StatsCardWrapper = ({ title, value, index }) => {
 };
 
 export default StatsCardWrapper;
+
