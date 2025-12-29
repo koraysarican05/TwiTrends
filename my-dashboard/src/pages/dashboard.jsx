@@ -20,7 +20,7 @@ const Dashboard = () => {
   const [lineData, setLineData] = useState([]);
   const [refreshToken, setRefreshToken] = useState(Date.now());
 
-  // Tweet istatistiklerini getir
+  // Tweet statistics
   const fetchStats = () => {
     if (!searchKeyword || !user?.user_id) {
       setTweetStats({ total: 0, positive: 0, negative: 0, neutral: 0 });
@@ -178,3 +178,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
