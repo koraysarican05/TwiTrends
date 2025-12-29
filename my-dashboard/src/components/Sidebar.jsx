@@ -50,7 +50,7 @@ const Sidebar = () => {
         h-full p-4 flex-shrink-0 
         transition-all duration-300 ease-in-out`}
     >
-      {/* Menü Aç/Kapat Butonu */}
+      {/* Menu Open/Close Button */}
       <button
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         className="mb-6 focus:outline-none"
@@ -58,7 +58,7 @@ const Sidebar = () => {
         <Menu size={28} className="transition-all duration-300" />
       </button>
 
-      {/* Başlık */}
+      {/* Header */}
       <h2
         className={`text-xl font-bold mb-6 transition-all duration-300 ease-in-out transform
           ${isSidebarOpen ? "block opacity-100 translate-x-0" : "hidden opacity-0 -translate-x-3"}`}
@@ -66,7 +66,7 @@ const Sidebar = () => {
         TwiTrends
       </h2>
 
-      {/* Menü Öğeleri */}
+      {/* Menu Objects */}
       <ul className="space-y-2">
         {menuItems.map((item, index) => (
           <li key={index}>
@@ -90,3 +90,4 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
