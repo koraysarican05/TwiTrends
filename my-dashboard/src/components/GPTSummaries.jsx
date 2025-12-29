@@ -10,7 +10,7 @@ const GPTSummaries = ({ refreshTrigger }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Eğer searchKeyword boşsa veriyi çekme
+    
     if (!searchKeyword) {
       setSummaries([]);
       setLoading(false);
@@ -29,9 +29,9 @@ const GPTSummaries = ({ refreshTrigger }) => {
       }
     };
 
-    // Sadece scraping sonrası veri çek
+   
     fetchSummaries();
-  }, [refreshTrigger, searchKeyword]); // refreshTrigger ve searchKeyword'a bağlı olarak veri çekilir
+  }, [refreshTrigger, searchKeyword]);
 
   return (
     <div>
@@ -116,3 +116,4 @@ const GPTSummaries = ({ refreshTrigger }) => {
 };
 
 export default GPTSummaries;
+
