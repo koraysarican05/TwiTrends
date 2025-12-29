@@ -24,10 +24,10 @@ const LiveTweets = ({ refreshTrigger }) => {
       .then((res) => {
         const sorted = res.data
           .sort((a, b) => new Date(b.tweet_date) - new Date(a.tweet_date))
-          .slice(0, 10); // ilk 10 tweet
+          .slice(0, 10); 
   
-        setTweets(sorted);          // tüm tweet'leri sakla
-        setFilteredTweets(sorted);  // arama kutusuna göre gösterilecekler
+        setTweets(sorted);          
+        setFilteredTweets(sorted);  
       })
       .catch((err) => {
         console.error("Tweet verisi alınamadı:", err);
@@ -42,7 +42,7 @@ const LiveTweets = ({ refreshTrigger }) => {
     }
 
     fetchTweets();
-  }, [refreshTrigger, searchKeyword, user.user_id]);  //user.user_id takibi eklendi
+  }, [refreshTrigger, searchKeyword, user.user_id]);  
 
   const handleSearch = (e) => {
     const term = e.target.value;
@@ -101,3 +101,4 @@ const LiveTweets = ({ refreshTrigger }) => {
 };
 
 export default LiveTweets;
+
