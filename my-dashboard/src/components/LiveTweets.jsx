@@ -2,11 +2,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { SearchContext } from "../context/SearchContext";
-import { useUser } from "../context/UserContext";    // ✅ UserContext eklendi
+import { useUser } from "../context/UserContext";    
 
 const LiveTweets = ({ refreshTrigger }) => {
   const { searchKeyword } = useContext(SearchContext);
-  const { user } = useUser();                         // ✅ User verisi alındı
+  const { user } = useUser();                         
   const [searchTerm, setSearchTerm] = useState("");
   const [tweets, setTweets] = useState([]);
   const [filteredTweets, setFilteredTweets] = useState([]);
@@ -101,4 +101,5 @@ const LiveTweets = ({ refreshTrigger }) => {
 };
 
 export default LiveTweets;
+
 
