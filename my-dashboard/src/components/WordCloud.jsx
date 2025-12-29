@@ -8,7 +8,7 @@ const WordCloudComponent = ({ refreshTrigger, dateRange }) => {
   const [layoutWords, setLayoutWords] = useState([]);
   const [size, setSize] = useState({ width: 400, height: 400 });
 
-  // Ekrana göre boyut ayarla
+  
   useEffect(() => {
     const updateSize = () => {
       const width = window.innerWidth;
@@ -23,7 +23,7 @@ const WordCloudComponent = ({ refreshTrigger, dateRange }) => {
 
   useEffect(() => {
     if (!searchKeyword || !dateRange?.start || !dateRange?.end) {
-      setRawData([]); // Eğer gerekli veriler yoksa, rawData'yı temizle
+      setRawData([]); 
       return;
     }
 
@@ -43,7 +43,7 @@ const WordCloudComponent = ({ refreshTrigger, dateRange }) => {
         }
       })
       .catch((err) => console.error("Kelime bulutu verisi alınamadı:", err));
-  }, [refreshTrigger, dateRange]); // refreshTrigger ve dateRange'a bağlı olarak veri yenileme
+  }, [refreshTrigger, dateRange]); 
 
   useEffect(() => {
     if (rawData.length === 0) return;
@@ -94,7 +94,7 @@ const WordCloudComponent = ({ refreshTrigger, dateRange }) => {
       });
 
     layout.start();
-  }, [rawData, size]); // rawData ve size değiştikçe kelime bulutunu güncelle
+  }, [rawData, size]); 
 
   const getColor = (sentiment) => {
     switch (sentiment) {
@@ -136,3 +136,4 @@ const WordCloudComponent = ({ refreshTrigger, dateRange }) => {
 };
 
 export default WordCloudComponent;
+
