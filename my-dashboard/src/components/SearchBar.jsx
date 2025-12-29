@@ -52,7 +52,7 @@ const SearchBar = ({ onDateRangeChange, onSearchComplete }) => {
   const user_id = localStorage.getItem("user_id") || sessionStorage.getItem("user_id");
 
   try {
-    // Scraper'ı tetikleme
+    
     const scrapeRes = await axios.post("http://localhost:3001/api/scrape", {
       keyword: searchKeyword,
       startDate: dateRange.start,
@@ -62,23 +62,23 @@ const SearchBar = ({ onDateRangeChange, onSearchComplete }) => {
 
     console.log("[✅] Scraper tetiklendi:", scrapeRes.data);
 
-    // Scraping işlemi tamamlandığında rapor oluşturma isteği gönder
+    
     const reportRes = await axios.post("http://localhost:3001/generate-report", {
-      keyword: searchKeyword, // Kullanıcının arama kelimesi
+      keyword: searchKeyword, 
     });
 
     console.log("[✅] Rapor oluşturuldu:", reportRes.data);
 
-    // Arama sonrası dashboard'u yenileme
+    
     if (onSearchComplete) {
       setTimeout(() => {
         onSearchComplete();
       }, 1500);
     }
 
-    // Raporu frontend'de göstermek için:
+    
     console.log('Raporlar:', reportRes.data);
-    // Rapor URL'lerini kullanarak frontend'de raporları gösterin (CSV, PDF linkleri)
+    
   } catch (err) {
     console.error("[❌] Arama hatası:", err.response?.data || err.message);
   }
@@ -145,3 +145,4 @@ const SearchBar = ({ onDateRangeChange, onSearchComplete }) => {
 };
 
 export default SearchBar;
+
