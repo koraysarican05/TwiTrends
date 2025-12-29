@@ -9,8 +9,8 @@ const verifyToken = require('../middleware/verifyToken'); // Token middleware
 
 const config = {
   user: 'sa',
-  password: '1234Koray!',
-  server: '127.0.0.1\\SQLEXPRESS',
+  password: process.env.DB_USER,
+  server: process.env.DB_PASSWORD,
   port: 1433,
   database: 'TwiTrends_1',
   options: {
@@ -21,7 +21,7 @@ const config = {
 
 const secretKey = 'secret-key';
 
-// Gmail üzerinden e-posta göndermeyi sağlayacak sendEmail fonksiyonu
+
 const sendEmail = async (email, resetToken) => {
   try {
     const transporter = nodemailer.createTransport({
@@ -290,3 +290,4 @@ router.delete('/admin/users/:id', verifyToken, async (req, res) => {
 
 
 module.exports = router;
+
