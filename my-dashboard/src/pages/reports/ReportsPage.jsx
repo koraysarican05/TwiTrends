@@ -7,7 +7,7 @@ const ReportsPage = () => {
   const [allReports, setAllReports] = useState([]);
   const [filteredReports, setFilteredReports] = useState([]);
 
-  // Backend'den raporları almak
+  // Taking reports
   const fetchReports = async () => {
     try {
       const res = await axios.get("http://localhost:3001/api/reports");
@@ -36,7 +36,7 @@ const ReportsPage = () => {
     return () => window.removeEventListener("focus", handleFocus);
   }, []);
 
-  // Filtreleme işlemi
+  // Filtering Process
   const handleFilter = ({ date, search }) => {
     let filtered = allReports;
     if (date) {
@@ -50,7 +50,7 @@ const ReportsPage = () => {
     setFilteredReports(filtered);
   };
 
-  // Rapor silme işlemi
+  // Deleting Report Process
   const handleDelete = async (filename) => {
     try {
       await axios.delete(`http://localhost:3001/reports/${filename}`);
@@ -81,3 +81,4 @@ const ReportsPage = () => {
 };
 
 export default ReportsPage;
+
